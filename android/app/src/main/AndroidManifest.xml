@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ind.mayank.monochat.monochat">
+    package="ind.mayank.monochat">
    <application
         android:label="monochat"
         android:icon="@mipmap/ic_launcher">
