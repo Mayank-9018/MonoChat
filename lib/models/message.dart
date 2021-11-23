@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Message {
+  //TODO: Replace date by timestamp
   final String text;
   final DateTime date;
   final String? email;
