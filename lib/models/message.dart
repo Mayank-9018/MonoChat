@@ -4,6 +4,7 @@ class Message {
   final String text;
   final DateTime date;
   final String? email;
+  final FieldValue timeStamp = FieldValue.serverTimestamp();
 
   DocumentReference? reference;
 
