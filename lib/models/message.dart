@@ -16,8 +16,12 @@ class Message {
       date: DateTime.parse(json['date'] as String),
       email: json['email'] as String?);
 
-  Map<String, dynamic> toJson() =>
-      <String, dynamic>{'date': date.toString(), 'text': text, 'email': email};
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'timeStamp': timeStamp,
+        'date': date.toString(),
+        'text': text,
+        'email': email
+      };
 
   factory Message.fromSnapshot(DocumentSnapshot snapshot) {
     final message = Message.fromJson(snapshot.data() as Map<String, dynamic>);
