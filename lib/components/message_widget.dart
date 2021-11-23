@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+//TODO: Show time and date inside the message itseld something like AOSP messages or below the message like Google Messages
 class MessageWidget extends StatelessWidget {
   final String message;
   final DateTime date;
@@ -32,19 +33,7 @@ class MessageWidget extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 250),
           child: Container(
             decoration: BoxDecoration(
-              border: Border.all(
-                color: Colors.grey,
-                style: BorderStyle.solid,
-                width: 1.0,
-              ),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.grey.shade400,
-                    offset: const Offset(1, 1),
-                    blurRadius: 1,
-                    spreadRadius: 1)
-              ],
-              color: Colors.white,
+              color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(15),
                   topRight: const Radius.circular(15),
