@@ -35,13 +35,13 @@ class MessageWidget extends StatelessWidget {
               border: Border.all(
                 color: Colors.grey,
                 style: BorderStyle.solid,
-                width: 0.5,
+                width: 1.0,
               ),
               boxShadow: <BoxShadow>[
                 BoxShadow(
-                    color: Colors.grey.shade500,
-                    offset: const Offset(2, 3),
-                    blurRadius: 5,
+                    color: Colors.grey.shade400,
+                    offset: const Offset(1, 1),
+                    blurRadius: 1,
                     spreadRadius: 1)
               ],
               color: Colors.white,
