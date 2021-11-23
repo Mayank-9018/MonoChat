@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:monochat/models/message.dart';
 import 'package:monochat/models/message_dao.dart';
 import 'package:provider/provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'message_widget.dart';
 
 class MessageList extends StatefulWidget {
   const MessageList({Key? key}) : super(key: key);
@@ -56,11 +58,7 @@ class _MessageListState extends State<MessageList> {
               hintText: 'Enter new message'),
         ),
       ),
-      body: Column(
-        children: [
-          _getMessageList(),
-        ],
-      ),
+      body: _getMessageList(messageDao),
     );
   }
 
@@ -79,7 +77,28 @@ class _MessageListState extends State<MessageList> {
     }
   }
 
-  Widget _getMessageList() {
-    return const SizedBox.shrink();
+  Widget _getMessageList(MessageDao messageDao) {
+    return StreamBuilder<QuerySnapshot>(
+      stream: messageDao.getMessageStream(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(child: LinearProgressIndicator());
+        }
+        return _buildList(context, snapshot.data!.docs);
+      },
+    );
+  }
+
+  Widget _buildList(BuildContext context, List<DocumentSnapshot>? snapshot) {
+    return ListView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.only(top: 20.0),
+      children: snapshot!.map((data) => _buildListItem(context, data)).toList(),
+    );
+  }
+
+  Widget _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
+    final message = Message.fromSnapshot(snapshot);
+    return MessageWidget(message.text, message.date, message.email);
   }
 }
