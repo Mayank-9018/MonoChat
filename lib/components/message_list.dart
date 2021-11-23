@@ -86,14 +86,8 @@ class _MessageListState extends State<MessageList> {
       child: StreamBuilder<QuerySnapshot>(
         stream: messageDao.getMessageStream(),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.active) {
-            if (snapshot.hasData) {
-              return _buildList(context, snapshot.data!.docs);
-            } else {
-              return const Center(
-                child: Text('Uh oh!'),
-              );
-            }
+          if (snapshot.hasData) {
+            return _buildList(context, snapshot.data!.docs);
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -103,11 +97,17 @@ class _MessageListState extends State<MessageList> {
   }
 
   Widget _buildList(BuildContext context, List<DocumentSnapshot>? snapshot) {
-    return ListView(
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.only(top: 20.0),
-      children: snapshot!.map((data) => _buildListItem(context, data)).toList(),
-    );
+    return ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        itemBuilder: (context, ind) => _buildListItem(context, snapshot![ind]),
+        separatorBuilder: (con, ind) => const SizedBox(
+              height: 8,
+            ),
+        itemCount: snapshot!.length);
+    // return ListView(
+    //   children: snapshot!.map((data) => _buildListItem(context, data)).toList(),
+    // );
   }
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
