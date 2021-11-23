@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:monochat/models/message.dart';
+import 'package:monochat/models/message_dao.dart';
+import 'package:provider/provider.dart';
 
 class MessageList extends StatefulWidget {
   const MessageList({Key? key}) : super(key: key);
@@ -9,6 +12,13 @@ class MessageList extends StatefulWidget {
 
 class _MessageListState extends State<MessageList> {
   final TextEditingController _messageController = TextEditingController();
+  late final MessageDao messageDao;
+
+  @override
+  void initState() {
+    super.initState();
+    messageDao = Provider.of<MessageDao>(context, listen: false);
+  }
 
   @override
   void dispose() {
@@ -31,14 +41,13 @@ class _MessageListState extends State<MessageList> {
           keyboardType: TextInputType.text,
           controller: _messageController,
           onSubmitted: (input) {
-            // TODO: Add Message DAO 1
-            _sendMessage();
+            _sendMessage(messageDao);
           },
           decoration: InputDecoration(
               suffixIcon: InkWell(
                 borderRadius: const BorderRadius.all(Radius.circular(25.0)),
                 child: const Icon(Icons.send),
-                onTap: () {},
+                onTap: () => _sendMessage(messageDao),
               ),
               border: const UnderlineInputBorder(
                   borderSide: BorderSide.none,
@@ -57,7 +66,18 @@ class _MessageListState extends State<MessageList> {
 
   bool _canSendMessage() => _messageController.text.isNotEmpty;
 
-  void _sendMessage() {}
+  void _sendMessage(MessageDao messageDao) {
+    if (_canSendMessage()) {
+      final message = Message(
+        text: _messageController.text,
+        date: DateTime.now(),
+        // TODO: add email
+      );
+      messageDao.saveMessage(message);
+      _messageController.clear();
+      setState(() {});
+    }
+  }
 
   Widget _getMessageList() {
     return const SizedBox.shrink();
