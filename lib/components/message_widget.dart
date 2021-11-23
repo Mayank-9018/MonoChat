@@ -20,6 +20,7 @@ class MessageWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             CircleAvatar(
               backgroundColor: [
