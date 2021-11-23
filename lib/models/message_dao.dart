@@ -11,6 +11,6 @@ class MessageDao {
   }
 
   Stream<QuerySnapshot> getMessageStream() {
-    return collection.orderBy('timeStamp', descending: false).snapshots();
+    return collection.orderBy('timeStamp', descending: true).snapshots();
   }
 }
