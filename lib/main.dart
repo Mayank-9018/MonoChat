@@ -23,7 +23,11 @@ class App extends StatelessWidget {
           create: (__) => MessageDao(),
         )
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
+        theme: ThemeData(
+          cardColor: Colors.grey.shade200,
+        ),
+        darkTheme: ThemeData.dark(),
         title: 'MonoChat',
         home: MessageList(),
       ),
