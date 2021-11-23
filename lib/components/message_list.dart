@@ -86,10 +86,17 @@ class _MessageListState extends State<MessageList> {
       child: StreamBuilder<QuerySnapshot>(
         stream: messageDao.getMessageStream(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: LinearProgressIndicator());
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasData) {
+              return _buildList(context, snapshot.data!.docs);
+            } else {
+              return const Center(
+                child: Text('Uh oh!'),
+              );
+            }
+          } else {
+            return const Center(child: CircularProgressIndicator());
           }
-          return _buildList(context, snapshot.data!.docs);
         },
       ),
     );
