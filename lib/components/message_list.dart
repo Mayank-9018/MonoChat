@@ -34,31 +34,35 @@ class _MessageListState extends State<MessageList> {
       appBar: AppBar(
         title: const Text('MonoChat'),
       ),
-      bottomSheet: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: TextField(
-          textAlignVertical: TextAlignVertical.top,
-          minLines: 1,
-          maxLines: 6,
-          keyboardType: TextInputType.text,
-          controller: _messageController,
-          onSubmitted: (input) {
-            _sendMessage(messageDao);
-          },
-          decoration: InputDecoration(
-              suffixIcon: InkWell(
-                borderRadius: const BorderRadius.all(Radius.circular(25.0)),
-                child: const Icon(Icons.send),
-                onTap: () => _sendMessage(messageDao),
-              ),
-              border: const UnderlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.all(Radius.circular(25.0))),
-              filled: true,
-              hintText: 'Enter new message'),
-        ),
+      body: Column(
+        children: [
+          _getMessageList(messageDao),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+            child: TextField(
+              textAlignVertical: TextAlignVertical.top,
+              minLines: 1,
+              maxLines: 6,
+              keyboardType: TextInputType.text,
+              controller: _messageController,
+              onSubmitted: (input) {
+                _sendMessage(messageDao);
+              },
+              decoration: InputDecoration(
+                  suffixIcon: InkWell(
+                    borderRadius: const BorderRadius.all(Radius.circular(25.0)),
+                    child: const Icon(Icons.send),
+                    onTap: () => _sendMessage(messageDao),
+                  ),
+                  border: const UnderlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.all(Radius.circular(25.0))),
+                  filled: true,
+                  hintText: 'Enter new message'),
+            ),
+          ),
+        ],
       ),
-      body: _getMessageList(messageDao),
     );
   }
 
@@ -78,14 +82,16 @@ class _MessageListState extends State<MessageList> {
   }
 
   Widget _getMessageList(MessageDao messageDao) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: messageDao.getMessageStream(),
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return const Center(child: LinearProgressIndicator());
-        }
-        return _buildList(context, snapshot.data!.docs);
-      },
+    return Expanded(
+      child: StreamBuilder<QuerySnapshot>(
+        stream: messageDao.getMessageStream(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(child: LinearProgressIndicator());
+          }
+          return _buildList(context, snapshot.data!.docs);
+        },
+      ),
     );
   }
 
