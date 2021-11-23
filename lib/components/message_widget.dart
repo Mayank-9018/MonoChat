@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -16,31 +18,26 @@ class MessageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        if (fromUser)
-          Row(
-            children: [
-              Text(
-                DateFormat('h:mm a').format(date).toString(),
-                style: const TextStyle(color: Colors.grey),
-                //TODO: Instead of defining textstyles individually, utilise Themes
-              ),
-              const SizedBox(
-                width: 5,
-              )
-            ],
-          ),
+        CircleAvatar(
+          backgroundColor: [
+            Colors.red,
+            Colors.green,
+            Colors.blue,
+            Colors.yellow,
+            Colors.white
+          ].elementAt(Random().nextInt(5)),
+        ),
+        const SizedBox(
+          width: 5,
+        ),
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 250),
           child: Container(
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
-              borderRadius: BorderRadius.only(
-                  topLeft: const Radius.circular(15),
-                  topRight: const Radius.circular(15),
-                  bottomLeft:
-                      fromUser ? const Radius.circular(15) : Radius.zero,
-                  bottomRight:
-                      fromUser ? Radius.zero : const Radius.circular(15)),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(15),
+              ),
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -48,22 +45,6 @@ class MessageWidget extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(
-          width: 5,
-        ),
-        if (!fromUser)
-          Row(
-            children: [
-              Text(
-                DateFormat('h:mm a').format(date).toString(),
-                style: const TextStyle(color: Colors.grey),
-                //TODO: Instead of defining textstyles individually, utilise Themes
-              ),
-              const SizedBox(
-                width: 5,
-              )
-            ],
-          ),
       ],
     );
   }
