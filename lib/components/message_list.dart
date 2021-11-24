@@ -14,6 +14,7 @@ class MessageList extends StatefulWidget {
 
 class _MessageListState extends State<MessageList> {
   final TextEditingController _messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
   late final MessageDao messageDao;
 
   @override
@@ -77,8 +78,18 @@ class _MessageListState extends State<MessageList> {
       );
       messageDao.saveMessage(message);
       _messageController.clear();
+      scrollToBottom();
       setState(() {});
     }
+  }
+
+  void scrollToBottom() {
+    final bottomOffset = _scrollController.position.minScrollExtent;
+    _scrollController.animateTo(
+      bottomOffset,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeInOut,
+    );
   }
 
   Widget _getMessageList(MessageDao messageDao) {
@@ -98,6 +109,7 @@ class _MessageListState extends State<MessageList> {
 
   Widget _buildList(BuildContext context, List<DocumentSnapshot>? snapshot) {
     return ListView.separated(
+        controller: _scrollController,
         reverse: true,
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
