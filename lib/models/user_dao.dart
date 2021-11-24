@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+//TODO: Do proper error handling on login and signup
 
-class UserDao extends ChangeNotifier {
+class UserDao {
   final auth = FirebaseAuth.instance;
 
   bool isLoggedIn() {
@@ -22,8 +22,6 @@ class UserDao extends ChangeNotifier {
         email: email,
         password: password,
       );
-
-      notifyListeners();
     } on FirebaseAuthException catch (e) {
       print(e.code);
       //   if (e.code == 'weak-password') {
@@ -43,8 +41,6 @@ class UserDao extends ChangeNotifier {
         email: email,
         password: password,
       );
-
-      notifyListeners();
     } on FirebaseAuthException catch (e) {
       print(e.code);
       //   if (e.code == 'weak-password') {
@@ -60,6 +56,5 @@ class UserDao extends ChangeNotifier {
 
   void logout() async {
     await auth.signOut();
-    notifyListeners();
   }
 }
