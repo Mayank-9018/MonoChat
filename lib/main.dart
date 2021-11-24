@@ -18,10 +18,19 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Provider<MessageDao>(
-        create: (_) => MessageDao(),
-        lazy: false,
-        child: MaterialApp(
+    return MultiProvider(
+      providers: [
+        Provider<MessageDao>(
+          create: (_) => MessageDao(),
+          lazy: false,
+        ),
+        Provider<UserDao>(
+          create: (_) => UserDao(),
+          lazy: false,
+        )
+      ],
+      builder: (context, child) {
+        return MaterialApp(
             theme: ThemeData(
               cardColor: Colors.grey.shade200,
             ),
@@ -33,6 +42,8 @@ class App extends StatelessWidget {
                   Provider.of<UserDao>(context, listen: false).isLoggedIn()
                       ? const ChatScreen()
                       : const LoginScreen(),
-            )));
+            ));
+      },
+    );
   }
 }
