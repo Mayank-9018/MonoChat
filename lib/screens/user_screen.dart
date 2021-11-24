@@ -27,14 +27,17 @@ class _UserScreenState extends State<UserScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            CircleAvatar(
-              foregroundImage: userdao.photoUrl() == null
-                  ? null
-                  : CachedNetworkImageProvider(userdao.photoUrl()!),
-              backgroundColor: userdao.photoUrl() != null
-                  ? Colors.grey[400]
-                  : Colors.deepPurple[300],
-              radius: 100,
+            Hero(
+              tag: userdao.userId()!,
+              child: CircleAvatar(
+                foregroundImage: userdao.photoUrl() == null
+                    ? null
+                    : CachedNetworkImageProvider(userdao.photoUrl()!),
+                backgroundColor: userdao.photoUrl() != null
+                    ? Colors.grey[400]
+                    : Colors.deepPurple[300],
+                radius: 100,
+              ),
             ),
             Text(
               (userdao.name() ?? "").isNotEmpty ? userdao.name()! : 'No Name',

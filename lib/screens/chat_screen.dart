@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monochat/models/message.dart';
 import 'package:monochat/models/message_dao.dart';
+import 'package:monochat/models/user_dao.dart';
 import 'package:monochat/screens/user_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -45,8 +46,11 @@ class _ChatScreenState extends State<ChatScreen> {
             borderRadius: BorderRadius.circular(40),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: CircleAvatar(
-                backgroundColor: Colors.deepPurple[300],
+              child: Hero(
+                tag: Provider.of<UserDao>(context).userId()!,
+                child: CircleAvatar(
+                  backgroundColor: Colors.deepPurple[300],
+                ),
               ),
             ),
           ),
