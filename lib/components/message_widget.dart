@@ -3,6 +3,12 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+extension DateOnlyCompare on DateTime {
+  bool isSameDate(DateTime other) {
+    return year == other.year && month == other.month && day == other.day;
+  }
+}
+
 //TODO: Show time and date inside the message itseld something like AOSP messages or below the message like Google Messages
 class MessageWidget extends StatelessWidget {
   final String message;
@@ -55,8 +61,12 @@ class MessageWidget extends StatelessWidget {
           padding: const EdgeInsets.only(left: 55),
           child: Text(
             //TODO: Show Date and Day for older messages
-            DateFormat('h:mm a').format(date).toString(),
-            style: const TextStyle(color: Colors.grey),
+            DateFormat(date.isSameDate(DateTime.now())
+                    ? 'h:mm a'
+                    : 'LLL d • h:mm a')
+                .format(date)
+                .toString(),
+            style: const TextStyle(color: Colors.grey,fontSize: 12),
           ),
         )
       ],

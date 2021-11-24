@@ -98,7 +98,7 @@ class _MessageListState extends State<MessageList> {
 
   Widget _buildList(BuildContext context, List<DocumentSnapshot>? snapshot) {
     return ListView.separated(
-      reverse: true,
+        reverse: true,
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         itemBuilder: (context, ind) => _buildListItem(context, snapshot![ind]),
