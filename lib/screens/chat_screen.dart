@@ -34,6 +34,18 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          InkWell(
+            onTap: () {},
+            borderRadius: BorderRadius.circular(40),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: CircleAvatar(
+                backgroundColor: Colors.deepPurple[300],
+              ),
+            ),
+          ),
+        ],
         title: const Text('MonoChat'),
       ),
       body: Column(
