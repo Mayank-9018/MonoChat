@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:monochat/components/message_list.dart';
 import 'package:monochat/models/message_dao.dart';
+import 'package:monochat/screens/chat_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -29,7 +29,7 @@ class App extends StatelessWidget {
         ),
         darkTheme: ThemeData.dark(),
         title: 'MonoChat',
-        home: MessageList(),
+        home: const ChatScreen(),
       ),
     );
   }

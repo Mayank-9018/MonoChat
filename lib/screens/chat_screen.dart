@@ -3,16 +3,16 @@ import 'package:monochat/models/message.dart';
 import 'package:monochat/models/message_dao.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'message_widget.dart';
+import 'package:monochat/components/message_widget.dart';
 
-class MessageList extends StatefulWidget {
-  const MessageList({Key? key}) : super(key: key);
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({Key? key}) : super(key: key);
 
   @override
-  _MessageListState createState() => _MessageListState();
+  _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _MessageListState extends State<MessageList> {
+class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
   late final MessageDao messageDao;
