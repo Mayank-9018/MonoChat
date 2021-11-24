@@ -16,6 +16,18 @@ class UserDao {
     return auth.currentUser?.email;
   }
 
+  String? name() {
+    return auth.currentUser?.displayName;
+  }
+
+  String? photoUrl() {
+    return auth.currentUser?.photoURL;
+  }
+
+  DateTime? creationDate() {
+    return auth.currentUser?.metadata.creationTime;
+  }
+
   void signup(String email, String password) async {
     try {
       await auth.createUserWithEmailAndPassword(
