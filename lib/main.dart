@@ -1,8 +1,10 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:monochat/models/message_dao.dart';
-import 'package:monochat/screens/chat_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:monochat/models/user_dao.dart';
+import 'package:monochat/models/message_dao.dart';
+import 'package:monochat/screens/login_screen.dart';
+import 'package:monochat/screens/chat_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,21 +18,21 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        Provider<MessageDao>(
-          lazy: false,
-          create: (__) => MessageDao(),
-        )
-      ],
-      child: MaterialApp(
-        theme: ThemeData(
-          cardColor: Colors.grey.shade200,
-        ),
-        darkTheme: ThemeData.dark(),
-        title: 'MonoChat',
-        home: const ChatScreen(),
-      ),
-    );
+    return Provider<MessageDao>(
+        create: (_) => MessageDao(),
+        lazy: false,
+        child: MaterialApp(
+            theme: ThemeData(
+              cardColor: Colors.grey.shade200,
+            ),
+            darkTheme: ThemeData.dark(),
+            title: 'MonoChat',
+            home: Provider<UserDao>(
+              create: (_) => UserDao(),
+              builder: (context, child) =>
+                  Provider.of<UserDao>(context, listen: false).isLoggedIn()
+                      ? const ChatScreen()
+                      : const LoginScreen(),
+            )));
   }
 }
