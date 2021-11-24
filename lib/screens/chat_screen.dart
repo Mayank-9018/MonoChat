@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:monochat/models/message.dart';
 import 'package:monochat/models/message_dao.dart';
@@ -40,8 +41,12 @@ class _ChatScreenState extends State<ChatScreen> {
           InkWell(
             onTap: () {
               FocusScope.of(context).unfocus();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (con) => const UserScreen()));
+              Navigator.push(context, _createRoute()
+                  // CupertinoPageRoute<bool>(
+                  //   // fullscreenDialog: true,
+                  //   builder: (BuildContext context) => UserScreen(),
+                  // ),
+                  );
             },
             borderRadius: BorderRadius.circular(40),
             child: Padding(
@@ -86,6 +91,29 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          const UserScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.easeOutCubic;
+
+        final tween = Tween(begin: begin, end: end);
+        final curvedAnimation = CurvedAnimation(
+          parent: animation,
+          curve: curve,
+        );
+
+        return SlideTransition(
+          position: tween.animate(curvedAnimation),
+          child: child,
+        );
+      },
     );
   }
 
