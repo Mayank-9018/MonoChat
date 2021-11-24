@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monochat/models/message.dart';
 import 'package:monochat/models/message_dao.dart';
+import 'package:monochat/screens/user_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:monochat/components/message_widget.dart';
@@ -36,7 +37,11 @@ class _ChatScreenState extends State<ChatScreen> {
       appBar: AppBar(
         actions: [
           InkWell(
-            onTap: () {},
+            onTap: () {
+              FocusScope.of(context).unfocus();
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (con) => const UserScreen()));
+            },
             borderRadius: BorderRadius.circular(40),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
