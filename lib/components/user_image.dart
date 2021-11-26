@@ -20,6 +20,7 @@ class UserImage extends StatelessWidget {
           : Icon(
               Icons.person,
               size: radius != null ? 80.0 : 24.0,
+              color: Colors.black,
             ),
     );
   }
