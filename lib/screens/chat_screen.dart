@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:monochat/models/message.dart';
@@ -18,11 +19,13 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  late final UserDao userDao;
   late final MessageDao messageDao;
 
   @override
   void initState() {
     super.initState();
+    userDao = Provider.of<UserDao>(context, listen: false);
     messageDao = Provider.of<MessageDao>(context, listen: false);
   }
 
@@ -41,20 +44,24 @@ class _ChatScreenState extends State<ChatScreen> {
           InkWell(
             onTap: () {
               FocusScope.of(context).unfocus();
-              Navigator.push(context, _createRoute()
-                  // CupertinoPageRoute<bool>(
-                  //   // fullscreenDialog: true,
-                  //   builder: (BuildContext context) => UserScreen(),
-                  // ),
-                  );
+              Navigator.push(
+                  context,
+                  CupertinoPageRoute<bool>(
+                    builder: (BuildContext context) => UserScreen(),
+                  ));
             },
             borderRadius: BorderRadius.circular(40),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Hero(
-                tag: Provider.of<UserDao>(context).userId()!,
+                tag: userDao.userId()!,
                 child: CircleAvatar(
-                  backgroundColor: Colors.deepPurple[300],
+                  foregroundImage: userDao.photoUrl() == null
+                      ? null
+                      : CachedNetworkImageProvider(userDao.photoUrl()!),
+                  backgroundColor: userDao.photoUrl() != null
+                      ? Colors.grey[400]
+                      : Colors.deepPurple[300],
                 ),
               ),
             ),
@@ -91,29 +98,6 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ],
       ),
-    );
-  }
-
-  Route _createRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          const UserScreen(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(0.0, 1.0);
-        const end = Offset.zero;
-        const curve = Curves.easeOutCubic;
-
-        final tween = Tween(begin: begin, end: end);
-        final curvedAnimation = CurvedAnimation(
-          parent: animation,
-          curve: curve,
-        );
-
-        return SlideTransition(
-          position: tween.animate(curvedAnimation),
-          child: child,
-        );
-      },
     );
   }
 
