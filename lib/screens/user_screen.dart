@@ -25,8 +25,10 @@ class _UserScreenState extends State<UserScreen> {
       appBar: AppBar(),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(
+              height: 40,
+            ),
             Hero(
               tag: userdao.userId()!,
               child: CircleAvatar(
@@ -39,12 +41,31 @@ class _UserScreenState extends State<UserScreen> {
                 radius: 100,
               ),
             ),
+            const SizedBox(
+              height: 15,
+            ),
             Text(
               (userdao.name() ?? "").isNotEmpty ? userdao.name()! : 'No Name',
               style: Theme.of(context).textTheme.headline4,
             ),
-            Text(userdao.email()!),
-            Text(DateFormat('d LLLL y').format(userdao.creationDate()!))
+            const SizedBox(
+              height: 10,
+            ),
+            ListTile(
+              leading: const Icon(Icons.email_outlined),
+              title: Text(userdao.email()!),
+              subtitle: const Text('Email address'),
+              trailing: const Icon(
+                Icons.verified,
+                color: Colors.green,
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.calendar_today_outlined),
+              title:
+                  Text(DateFormat('d LLLL y').format(userdao.creationDate()!)),
+              subtitle: const Text('Date of account creation'),
+            ),
           ],
         ),
       ),
