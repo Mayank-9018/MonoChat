@@ -62,11 +62,12 @@ class MessageWidget extends StatelessWidget {
           child: Text(
             //TODO: Show Date and Day for older messages
             DateFormat(date.isSameDate(DateTime.now())
-                    ? 'h:mm a'
-                    : 'LLL d • h:mm a')
-                .format(date)
-                .toString(),
-            style: const TextStyle(color: Colors.grey,fontSize: 12),
+                        ? 'h:mm a'
+                        : 'LLL d • h:mm a')
+                    .format(date)
+                    .toString() +
+                " • $email",
+            style: const TextStyle(color: Colors.grey, fontSize: 12),
           ),
         )
       ],
