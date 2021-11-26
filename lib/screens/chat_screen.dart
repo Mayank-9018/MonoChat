@@ -47,7 +47,7 @@ class _ChatScreenState extends State<ChatScreen> {
               Navigator.push(
                   context,
                   CupertinoPageRoute<bool>(
-                    builder: (BuildContext context) => UserScreen(),
+                    builder: (BuildContext context) => const UserScreen(),
                   ));
             },
             borderRadius: BorderRadius.circular(40),
@@ -62,7 +62,7 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Column(
         children: [
-          _getMessageList(messageDao),
+          _getMessageList(),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: TextField(
@@ -97,10 +97,9 @@ class _ChatScreenState extends State<ChatScreen> {
   void _sendMessage(MessageDao messageDao) {
     if (_canSendMessage()) {
       final message = Message(
-        text: _messageController.text,
-        date: DateTime.now(),
-        // TODO: add email
-      );
+          text: _messageController.text,
+          date: DateTime.now(),
+          email: userDao.email());
       messageDao.saveMessage(message);
       _messageController.clear();
       scrollToBottom();
@@ -117,7 +116,7 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _getMessageList(MessageDao messageDao) {
+  Widget _getMessageList() {
     return Expanded(
       child: StreamBuilder<QuerySnapshot>(
         stream: messageDao.getMessageStream(),
@@ -143,9 +142,6 @@ class _ChatScreenState extends State<ChatScreen> {
               height: 8,
             ),
         itemCount: snapshot!.length);
-    // return ListView(
-    //   children: snapshot!.map((data) => _buildListItem(context, data)).toList(),
-    // );
   }
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
