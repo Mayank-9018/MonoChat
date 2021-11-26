@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:monochat/components/user_image.dart';
 import 'package:monochat/models/user_dao.dart';
 import 'package:provider/provider.dart';
 
@@ -30,17 +30,11 @@ class _UserScreenState extends State<UserScreen> {
               height: 40,
             ),
             Hero(
-              tag: userdao.userId()!,
-              child: CircleAvatar(
-                foregroundImage: userdao.photoUrl() == null
-                    ? null
-                    : CachedNetworkImageProvider(userdao.photoUrl()!),
-                backgroundColor: userdao.photoUrl() != null
-                    ? Colors.grey[400]
-                    : Colors.deepPurple[300],
-                radius: 100,
-              ),
-            ),
+                tag: userdao.userId()!,
+                child: UserImage(
+                  userdao.photoUrl(),
+                  radius: 100,
+                )),
             const SizedBox(
               height: 15,
             ),

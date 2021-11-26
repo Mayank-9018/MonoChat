@@ -1,6 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:monochat/components/user_image.dart';
 import 'package:monochat/models/message.dart';
 import 'package:monochat/models/message_dao.dart';
 import 'package:monochat/models/user_dao.dart';
@@ -54,16 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Hero(
-                tag: userDao.userId()!,
-                child: CircleAvatar(
-                  foregroundImage: userDao.photoUrl() == null
-                      ? null
-                      : CachedNetworkImageProvider(userDao.photoUrl()!),
-                  backgroundColor: userDao.photoUrl() != null
-                      ? Colors.grey[400]
-                      : Colors.deepPurple[300],
-                ),
-              ),
+                  tag: userDao.userId()!, child: UserImage(userDao.photoUrl())),
             ),
           ),
         ],
