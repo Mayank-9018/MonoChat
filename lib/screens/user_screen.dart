@@ -64,7 +64,7 @@ class _UserScreenState extends State<UserScreen> {
               leading: const Icon(Icons.calendar_today_outlined),
               title:
                   Text(DateFormat('d LLLL y').format(userdao.creationDate()!)),
-              subtitle: const Text('Date of account creation'),
+              subtitle: const Text('Account creation date'),
             ),
           ],
         ),
