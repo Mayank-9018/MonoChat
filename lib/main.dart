@@ -5,6 +5,7 @@ import 'package:monochat/models/user_dao.dart';
 import 'package:monochat/models/message_dao.dart';
 import 'package:monochat/screens/login_screen.dart';
 import 'package:monochat/screens/chat_screen.dart';
+import 'themes/themes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,10 +32,8 @@ class App extends StatelessWidget {
       ],
       builder: (context, child) {
         return MaterialApp(
-            theme: ThemeData(
-              cardColor: Colors.grey.shade200,
-            ),
-            darkTheme: ThemeData.dark(),
+            theme: lightTheme,
+            darkTheme: darkTheme,
             title: 'MonoChat',
             home: Provider<UserDao>(
               create: (_) => UserDao(),
