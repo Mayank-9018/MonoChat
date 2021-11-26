@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:monochat/components/user_image.dart';
 import 'package:monochat/models/user_dao.dart';
+import 'package:monochat/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 
 class UserScreen extends StatefulWidget {
@@ -22,7 +23,20 @@ class _UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              userdao.logout();
+              Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (con) => LoginScreen()),
+                  (route) => false);
+            },
+            icon: const Icon(Icons.logout),
+            tooltip: 'Logout',
+          )
+        ],
+      ),
       body: Center(
         child: Column(
           children: [
