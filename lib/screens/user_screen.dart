@@ -63,9 +63,12 @@ class _UserScreenState extends State<UserScreen> {
               leading: const Icon(Icons.email_outlined),
               title: Text(userdao.email()!),
               subtitle: const Text('Email address'),
-              trailing: const Icon(
-                Icons.verified,
-                color: Colors.green,
+              trailing: const Tooltip(
+                message: 'Email Verified!',
+                child: Icon(
+                  Icons.verified,
+                  color: Colors.green,
+                ),
               ),
             ),
             ListTile(
