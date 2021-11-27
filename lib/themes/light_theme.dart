@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 ThemeData lightTheme = ThemeData(
+  textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+          overlayColor: MaterialStateProperty.all(Colors.grey.shade100),
+          foregroundColor: MaterialStateProperty.all(Colors.black))),
   textSelectionTheme: TextSelectionThemeData(
       cursorColor: Colors.black,
       selectionHandleColor: Colors.black,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:monochat/models/user_dao.dart';
+import 'package:monochat/screens/chat_screen.dart';
 import 'package:provider/provider.dart';
+
+//TODO: Have textfield validation
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -12,7 +15,6 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late final UserDao userDao;
 
   @override
@@ -31,96 +33,77 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('MonoChat'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const SizedBox(height: 80),
-                  Expanded(
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(),
-                        hintText: 'Email Address',
-                      ),
-                      autofocus: false,
-                      keyboardType: TextInputType.emailAddress,
-                      textCapitalization: TextCapitalization.none,
-                      autocorrect: false,
-                      controller: _emailController,
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Email Required';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: TextFormField(
-                      decoration: const InputDecoration(
-                          border: UnderlineInputBorder(), hintText: 'Password'),
-                      autofocus: false,
-                      obscureText: true,
-                      keyboardType: TextInputType.visiblePassword,
-                      textCapitalization: TextCapitalization.none,
-                      autocorrect: false,
-                      controller: _passwordController,
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Password Required';
-                        }
-                        return null;
-                      },
-                    ),
-                  ),
-                ],
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        userDao.login(
-                            _emailController.text, _passwordController.text);
-                      },
-                      child: const Text('Login'),
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  const SizedBox(height: 20),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        userDao.signup(
-                            _emailController.text, _passwordController.text);
-                      },
-                      child: const Text('Sign Up'),
-                    ),
-                  ),
-                  const SizedBox(height: 60),
-                ],
-              ),
-            ],
+        body: ListView(
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.only(left: 40, right: 40, top: 120, bottom: 25),
+      children: [
+        Image.asset(
+          Theme.of(context).brightness == Brightness.light
+              ? 'assets/mono_logo_black.png'
+              : 'assets/mono_logo_white.png',
+          height: 100,
+        ),
+        const SizedBox(
+          height: 25,
+        ),
+        Center(
+          child: Text(
+            'MonoChat',
+            style: Theme.of(context).textTheme.headline3,
           ),
         ),
-      ),
-    );
+        const SizedBox(height: 60),
+        TextField(
+          controller: _emailController,
+          autofocus: false,
+          keyboardType: TextInputType.emailAddress,
+          textCapitalization: TextCapitalization.none,
+          decoration: InputDecoration(
+              labelStyle: Theme.of(context).textTheme.bodyText1,
+              labelText: 'Email Address',
+              focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      width: 1.5))),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        TextField(
+          controller: _passwordController,
+          autofocus: false,
+          autocorrect: false,
+          obscureText: true,
+          keyboardType: TextInputType.visiblePassword,
+          textCapitalization: TextCapitalization.none,
+          decoration: InputDecoration(
+              labelStyle: Theme.of(context).textTheme.bodyText1,
+              labelText: 'Password',
+              focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.black
+                          : Colors.white,
+                      width: 1.5))),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        TextButton(
+          onPressed: () {
+            // userDao.login(_emailController.text, _passwordController.text);
+            // Navigator.pushReplacement(
+            //     context, MaterialPageRoute(builder: (con) => ChatScreen()));
+          },
+          child: const Text('Login'),
+        ),
+        TextButton(
+          onPressed: () {},
+          child: const Text('Create new account'),
+        ),
+      ],
+    ));
   }
 }
