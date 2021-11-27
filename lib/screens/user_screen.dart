@@ -34,6 +34,7 @@ class _UserScreenState extends State<UserScreen> {
         ],
       ),
       body: ListView(
+        physics: const BouncingScrollPhysics(),
         children: [
           const SizedBox(
             height: 40,
@@ -53,7 +54,7 @@ class _UserScreenState extends State<UserScreen> {
                 (userdao.name() ?? "").isNotEmpty ? userdao.name()! : 'No Name',
             style: Theme.of(context).textTheme.headline4,
             decoration: const InputDecoration(border: InputBorder.none),
-            onFieldSubmitted: (text)=>userdao.updateName(text),
+            onFieldSubmitted: (text) => userdao.updateName(text),
           ),
           const SizedBox(
             height: 10,
