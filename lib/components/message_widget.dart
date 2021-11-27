@@ -9,7 +9,6 @@ extension DateOnlyCompare on DateTime {
   }
 }
 
-//TODO: Show time and date inside the message itseld something like AOSP messages or below the message like Google Messages
 class MessageWidget extends StatelessWidget {
   final String message;
   final DateTime date;
@@ -60,7 +59,6 @@ class MessageWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 55),
           child: Text(
-            //TODO: Show Date and Day for older messages
             DateFormat(date.isSameDate(DateTime.now())
                         ? 'h:mm a'
                         : 'LLL d • h:mm a')
