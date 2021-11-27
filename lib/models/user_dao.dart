@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:monochat/models/exceptions.dart';
 
-class UserDao {
+class CurrentUserDao {
   final auth = FirebaseAuth.instance;
 
   bool isLoggedIn() {

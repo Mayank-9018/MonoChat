@@ -20,7 +20,7 @@ class LogoutDialog extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            Provider.of<UserDao>(context,listen: false).logout();
+            Provider.of<CurrentUserDao>(context,listen: false).logout();
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (con) => const LoginScreen()),
                 (route) => false);

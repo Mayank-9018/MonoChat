@@ -13,11 +13,11 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<UserScreen> {
-  late final UserDao userdao;
+  late final CurrentUserDao currentUserDao;
   @override
   void initState() {
     super.initState();
-    userdao = Provider.of<UserDao>(context, listen: false);
+    currentUserDao = Provider.of<CurrentUserDao>(context, listen: false);
   }
 
   @override
@@ -40,9 +40,9 @@ class _UserScreenState extends State<UserScreen> {
             height: 40,
           ),
           Hero(
-              tag: userdao.userId()!,
+              tag: currentUserDao.userId()!,
               child: UserImage(
-                userdao.photoUrl(),
+                currentUserDao.photoUrl(),
                 radius: 100,
               )),
           const SizedBox(
@@ -51,17 +51,17 @@ class _UserScreenState extends State<UserScreen> {
           TextFormField(
             textAlign: TextAlign.center,
             initialValue:
-                (userdao.name() ?? "").isNotEmpty ? userdao.name()! : 'No Name',
+                (currentUserDao.name() ?? "").isNotEmpty ? currentUserDao.name()! : 'No Name',
             style: Theme.of(context).textTheme.headline4,
             decoration: const InputDecoration(border: InputBorder.none),
-            onFieldSubmitted: (text) => userdao.updateName(text),
+            onFieldSubmitted: (text) => currentUserDao.updateName(text),
           ),
           const SizedBox(
             height: 10,
           ),
           ListTile(
             leading: const Icon(Icons.email_outlined),
-            title: Text(userdao.email()!),
+            title: Text(currentUserDao.email()!),
             subtitle: const Text('Email address'),
             trailing: const Tooltip(
               message: 'Email Verified!',
@@ -73,7 +73,7 @@ class _UserScreenState extends State<UserScreen> {
           ),
           ListTile(
             leading: const Icon(Icons.calendar_today_outlined),
-            title: Text(DateFormat('d LLLL y').format(userdao.creationDate()!)),
+            title: Text(DateFormat('d LLLL y').format(currentUserDao.creationDate()!)),
             subtitle: const Text('Account creation date'),
           ),
         ],

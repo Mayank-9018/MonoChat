@@ -19,13 +19,13 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  late final UserDao userDao;
+  late final CurrentUserDao currentUserDao;
   late final MessageDao messageDao;
 
   @override
   void initState() {
     super.initState();
-    userDao = Provider.of<UserDao>(context, listen: false);
+    currentUserDao = Provider.of<CurrentUserDao>(context, listen: false);
     messageDao = Provider.of<MessageDao>(context, listen: false);
   }
 
@@ -54,7 +54,7 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Hero(
-                  tag: userDao.userId()!, child: UserImage(userDao.photoUrl())),
+                  tag: currentUserDao.userId()!, child: UserImage(currentUserDao.photoUrl())),
             ),
           ),
         ],
@@ -99,7 +99,7 @@ class _ChatScreenState extends State<ChatScreen> {
       final message = Message(
           text: _messageController.text,
           date: DateTime.now(),
-          email: userDao.email());
+          email: currentUserDao.email());
       messageDao.saveMessage(message);
       _messageController.clear();
       scrollToBottom();

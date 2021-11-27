@@ -16,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  late final UserDao userDao;
+  late final CurrentUserDao currentUserDao;
 
   @override
   void dispose() {
@@ -28,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    userDao = Provider.of<UserDao>(context, listen: false);
+    currentUserDao = Provider.of<CurrentUserDao>(context, listen: false);
   }
 
   @override
@@ -131,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void login() async {
     if (_formKey.currentState!.validate()) {
       try {
-        await userDao.login(_emailController.text, _passwordController.text);
+        await currentUserDao.login(_emailController.text, _passwordController.text);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (con) => const ChatScreen()));
       } catch (e) {
@@ -144,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void signup() async {
     if (_formKey.currentState!.validate()) {
       try {
-        await userDao.signup(_emailController.text, _passwordController.text);
+        await currentUserDao.signup(_emailController.text, _passwordController.text);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (con) => const ChatScreen()));
       } catch (e) {

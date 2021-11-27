@@ -25,8 +25,8 @@ class App extends StatelessWidget {
           create: (_) => MessageDao(),
           lazy: false,
         ),
-        Provider<UserDao>(
-          create: (_) => UserDao(),
+        Provider<CurrentUserDao>(
+          create: (_) => CurrentUserDao(),
           lazy: false,
         )
       ],
@@ -35,10 +35,10 @@ class App extends StatelessWidget {
             theme: lightTheme,
             darkTheme: darkTheme,
             title: 'MonoChat',
-            home: Provider<UserDao>(
-              create: (_) => UserDao(),
+            home: Provider<CurrentUserDao>(
+              create: (_) => CurrentUserDao(),
               builder: (context, child) =>
-                  Provider.of<UserDao>(context, listen: false).isLoggedIn()
+                  Provider.of<CurrentUserDao>(context, listen: false).isLoggedIn()
                       ? const ChatScreen()
                       : const LoginScreen(),
             ));
