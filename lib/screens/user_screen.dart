@@ -29,7 +29,7 @@ class _UserScreenState extends State<UserScreen> {
             onPressed: () {
               userdao.logout();
               Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (con) => LoginScreen()),
+                  MaterialPageRoute(builder: (con) => const LoginScreen()),
                   (route) => false);
             },
             icon: const Icon(Icons.logout),
