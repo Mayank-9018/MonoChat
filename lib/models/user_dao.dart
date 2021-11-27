@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:monochat/models/exceptions.dart';
-//TODO: Do proper error handling on login and signup
 
 class UserDao {
   final auth = FirebaseAuth.instance;
@@ -29,23 +28,25 @@ class UserDao {
     return auth.currentUser?.metadata.creationTime;
   }
 
-  void signup(String email, String password) async {
-    // TODO: Exception handling on signup
+  Future<bool> signup(String email, String password) async {
     try {
       await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      return true;
     } on FirebaseAuthException catch (e) {
-      print(e.code);
-      //   if (e.code == 'weak-password') {
-      //     print('The password provided is too weak.');
-      //   } else if (e.code == 'email-already-in-use') {
-      //     print('The account already exists for that email.');
-      //   }
-      // } catch (e) {
-      //   print(e);
-      // }
+      if (e.code == 'email-already-in-use') {
+        throw EmailAlreadyInUse();
+      } else if (e.code == 'invalid-email') {
+        throw InvalidEmail();
+      } else if (e.code == 'weak-password') {
+        throw WeakPassword();
+      } else if (e.code == 'network-request-failed') {
+        throw NetworkRequestFailed();
+      } else {
+        throw Exception({e.message});
+      }
     }
   }
 
@@ -57,7 +58,9 @@ class UserDao {
       );
       return true;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found' || e.code == 'wrong-password') {
+      if (e.code == 'user-not-found') {
+        throw UserNotFound();
+      } else if (e.code == 'wrong-password') {
         throw WrongCredentials();
       } else if (e.code == 'network-request-failed') {
         throw NetworkRequestFailed();

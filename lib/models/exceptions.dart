@@ -29,3 +29,35 @@ class TooManyRequests implements Exception {
     return errMessage;
   }
 }
+
+class UserNotFound implements Exception {
+  String errMessage = 'User not found!';
+  @override
+  String toString() {
+    return errMessage;
+  }
+}
+
+class EmailAlreadyInUse implements Exception {
+  String errMessage = 'An account already exists for this email address!';
+  @override
+  String toString() {
+    return errMessage;
+  }
+}
+
+class InvalidEmail implements Exception {
+  String errMessage = 'Invalid Email!';
+  @override
+  String toString() {
+    return errMessage;
+  }
+}
+
+class WeakPassword implements Exception {
+  String errMessage = 'Weak password! Password should contain 8+ characters';
+  @override
+  String toString() {
+    return errMessage;
+  }
+}

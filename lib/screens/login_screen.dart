@@ -3,6 +3,8 @@ import 'package:monochat/models/user_dao.dart';
 import 'package:monochat/screens/chat_screen.dart';
 import 'package:provider/provider.dart';
 
+//TODO: Email verification
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -101,7 +103,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   : Colors.white,
                           width: 1.5))),
               validator: (text) {
-                if (text == null || text.trim() == '') {
+                if (text == null ||
+                    text.trim() == '' ||
+                    text.trim().length < 8) {
                   return 'Invalid password!';
                 } else {
                   return null;
@@ -112,13 +116,11 @@ class _LoginScreenState extends State<LoginScreen> {
             height: 10,
           ),
           TextButton(
-            onPressed: () {
-              login();
-            },
+            onPressed: login,
             child: const Text('Login'),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: signup,
             child: const Text('Create new account'),
           ),
         ],
@@ -130,6 +132,19 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       try {
         await userDao.login(_emailController.text, _passwordController.text);
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (con) => const ChatScreen()));
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            behavior: SnackBarBehavior.floating, content: Text(e.toString())));
+      }
+    }
+  }
+
+  void signup() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await userDao.signup(_emailController.text, _passwordController.text);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (con) => const ChatScreen()));
       } catch (e) {
