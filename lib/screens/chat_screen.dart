@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:monochat/components/user_image.dart';
 import 'package:monochat/models/message.dart';
 import 'package:monochat/models/message_dao.dart';
-import 'package:monochat/models/user_dao.dart';
+import 'package:monochat/models/currentUser_dao.dart';
 import 'package:monochat/screens/user_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
