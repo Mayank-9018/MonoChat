@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:monochat/models/currentUser_dao.dart';
+import 'package:monochat/models/current_user_dao.dart';
 import 'package:monochat/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 

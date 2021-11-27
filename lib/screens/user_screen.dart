@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:monochat/components/logout_dialog.dart';
 import 'package:monochat/components/user_image.dart';
-import 'package:monochat/models/currentUser_dao.dart';
+import 'package:monochat/models/current_user_dao.dart';
 import 'package:provider/provider.dart';
 
 class UserScreen extends StatefulWidget {
