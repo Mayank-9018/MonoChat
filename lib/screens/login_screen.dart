@@ -92,10 +92,17 @@ class _LoginScreenState extends State<LoginScreen> {
           height: 10,
         ),
         TextButton(
-          onPressed: () {
-            // userDao.login(_emailController.text, _passwordController.text);
-            // Navigator.pushReplacement(
-            //     context, MaterialPageRoute(builder: (con) => ChatScreen()));
+          onPressed: () async {
+            try {
+              await userDao.login(
+                  _emailController.text, _passwordController.text);
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (con) => const ChatScreen()));
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  behavior: SnackBarBehavior.floating,
+                  content: Text(e.toString())));
+            }
           },
           child: const Text('Login'),
         ),
