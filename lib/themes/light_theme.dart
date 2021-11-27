@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//TODO: Define text theme
 ThemeData lightTheme = ThemeData(
   textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(

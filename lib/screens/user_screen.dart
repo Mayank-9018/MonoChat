@@ -33,48 +33,49 @@ class _UserScreenState extends State<UserScreen> {
           )
         ],
       ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 40,
-            ),
-            Hero(
-                tag: userdao.userId()!,
-                child: UserImage(
-                  userdao.photoUrl(),
-                  radius: 100,
-                )),
-            const SizedBox(
-              height: 15,
-            ),
-            Text(
-              (userdao.name() ?? "").isNotEmpty ? userdao.name()! : 'No Name',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ListTile(
-              leading: const Icon(Icons.email_outlined),
-              title: Text(userdao.email()!),
-              subtitle: const Text('Email address'),
-              trailing: const Tooltip(
-                message: 'Email Verified!',
-                child: Icon(
-                  Icons.verified,
-                  color: Colors.green,
-                ),
+      body: ListView(
+        children: [
+          const SizedBox(
+            height: 40,
+          ),
+          Hero(
+              tag: userdao.userId()!,
+              child: UserImage(
+                userdao.photoUrl(),
+                radius: 100,
+              )),
+          const SizedBox(
+            height: 15,
+          ),
+          TextFormField(
+            textAlign: TextAlign.center,
+            initialValue:
+                (userdao.name() ?? "").isNotEmpty ? userdao.name()! : 'No Name',
+            style: Theme.of(context).textTheme.headline4,
+            decoration: const InputDecoration(border: InputBorder.none),
+            onFieldSubmitted: (text)=>userdao.updateName(text),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          ListTile(
+            leading: const Icon(Icons.email_outlined),
+            title: Text(userdao.email()!),
+            subtitle: const Text('Email address'),
+            trailing: const Tooltip(
+              message: 'Email Verified!',
+              child: Icon(
+                Icons.verified,
+                color: Colors.green,
               ),
             ),
-            ListTile(
-              leading: const Icon(Icons.calendar_today_outlined),
-              title:
-                  Text(DateFormat('d LLLL y').format(userdao.creationDate()!)),
-              subtitle: const Text('Account creation date'),
-            ),
-          ],
-        ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.calendar_today_outlined),
+            title: Text(DateFormat('d LLLL y').format(userdao.creationDate()!)),
+            subtitle: const Text('Account creation date'),
+          ),
+        ],
       ),
     );
   }

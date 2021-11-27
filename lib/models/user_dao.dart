@@ -28,6 +28,10 @@ class UserDao {
     return auth.currentUser?.metadata.creationTime;
   }
 
+  void updateName(String newName) {
+    auth.currentUser?.updateDisplayName(newName);
+  }
+
   Future<bool> signup(String email, String password) async {
     try {
       await auth.createUserWithEmailAndPassword(
