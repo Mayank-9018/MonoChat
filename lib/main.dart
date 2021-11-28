@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:monochat/models/user_dao.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:monochat/models/current_user_dao.dart';
@@ -25,23 +26,24 @@ class App extends StatelessWidget {
           create: (_) => MessageDao(),
           lazy: false,
         ),
+        Provider<UserDao>(
+          create: (_) => UserDao(),
+          lazy: false,
+        ),
         Provider<CurrentUserDao>(
-          create: (_) => CurrentUserDao(),
+          create: (context) => CurrentUserDao(context),
           lazy: false,
         )
       ],
       builder: (context, child) {
         return MaterialApp(
-            theme: lightTheme,
-            darkTheme: darkTheme,
-            title: 'MonoChat',
-            home: Provider<CurrentUserDao>(
-              create: (_) => CurrentUserDao(),
-              builder: (context, child) =>
-                  Provider.of<CurrentUserDao>(context, listen: false).isLoggedIn()
-                      ? const ChatScreen()
-                      : const LoginScreen(),
-            ));
+          theme: lightTheme,
+          darkTheme: darkTheme,
+          title: 'MonoChat',
+          home: Provider.of<CurrentUserDao>(context, listen: false).isLoggedIn()
+              ? const ChatScreen()
+              : const LoginScreen(),
+        );
       },
     );
   }
