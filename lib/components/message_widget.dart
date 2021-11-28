@@ -24,7 +24,7 @@ class MessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<Map<String, dynamic>> userDataFuture =
-        Provider.of<UserDao>(context, listen: false).getUserDate(uid);
+        Provider.of<UserDao>(context, listen: false).getUserData(uid);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

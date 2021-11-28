@@ -4,7 +4,7 @@ class UserDao {
   final CollectionReference collection =
       FirebaseFirestore.instance.collection('users');
 
-  Future<Map<String, dynamic>> getUserDate(String uid) async {
+  Future<Map<String, dynamic>> getUserData(String uid) async {
     QuerySnapshot<Object?> query =
         await collection.where('uid', isEqualTo: uid).limit(1).get();
     return query.docs.first.data() as Map<String, dynamic>;
