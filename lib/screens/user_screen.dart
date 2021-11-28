@@ -50,22 +50,20 @@ class _UserScreenState extends State<UserScreen> {
               const SizedBox(
                 height: 40,
               ),
-              Hero(
-                  tag: currentUserDao.userId()!,
-                  child: UserImage(
-                    currentUserDao.userId()!,
-                    radius: 100,
-                  )),
+              UserImage(
+                currentUserDao.userId()!,
+                radius: 100,
+              ),
               const SizedBox(
                 height: 15,
               ),
-              TextFormField(
+              TextField(
                 textAlign: TextAlign.center,
-                initialValue:
-                    (snap.data?['name'] ?? "").isNotEmpty ? null : 'No Name',
+                controller: TextEditingController(
+                    text: snap.data!['name'] ?? 'No Name'),
                 style: Theme.of(context).textTheme.headline4,
                 decoration: const InputDecoration(border: InputBorder.none),
-                onFieldSubmitted: (text) {},
+                onSubmitted: (text) {},
               ),
               const SizedBox(
                 height: 10,
