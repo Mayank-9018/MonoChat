@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:monochat/components/user_image.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:monochat/models/user_dao.dart';
@@ -34,18 +35,7 @@ class MessageWidget extends StatelessWidget {
             FutureBuilder<Map<String, dynamic>>(
                 future: userDataFuture,
                 builder: (con, snapshot) {
-                  return CircleAvatar(
-                    backgroundColor: Colors.grey[200],
-                    child: snapshot.data?['photoUrl'] == null
-                        ? const Icon(
-                            Icons.person,
-                            color: Colors.black,
-                          )
-                        : null,
-                    foregroundImage: snapshot.data?['photoUrl'] == null
-                        ? null
-                        : NetworkImage(snapshot.data?['photoUrl']),
-                  );
+                  return UserImage(uid);
                 }),
             const SizedBox(
               width: 5,
