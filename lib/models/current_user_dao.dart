@@ -1,7 +1,13 @@
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:provider/provider.dart';
 import 'package:monochat/models/exceptions.dart';
+import 'package:monochat/models/user_dao.dart';
 
 class CurrentUserDao {
+  BuildContext context;
+  CurrentUserDao(this.context);
+
   final auth = FirebaseAuth.instance;
 
   bool isLoggedIn() {
@@ -12,32 +18,16 @@ class CurrentUserDao {
     return auth.currentUser?.uid;
   }
 
-  String? email() {
-    return auth.currentUser?.email;
-  }
-
-  String? name() {
-    return auth.currentUser?.displayName;
-  }
-
-  String? photoUrl() {
-    return auth.currentUser?.photoURL;
-  }
-
-  DateTime? creationDate() {
-    return auth.currentUser?.metadata.creationTime;
-  }
-
-  void updateName(String newName) {
-    auth.currentUser?.updateDisplayName(newName);
-  }
-
   Future<bool> signup(String email, String password) async {
     try {
       await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+      Provider.of<UserDao>(context, listen: false).addNewUser(
+          auth.currentUser!.uid,
+          email,
+          auth.currentUser!.metadata.creationTime as DateTime);
       return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
