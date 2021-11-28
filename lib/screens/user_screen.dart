@@ -58,13 +58,14 @@ class _UserScreenState extends State<UserScreen> {
                 height: 15,
               ),
               TextField(
-                textAlign: TextAlign.center,
-                controller: TextEditingController(
-                    text: snap.data!['name'] ?? 'No Name'),
-                style: Theme.of(context).textTheme.headline4,
-                decoration: const InputDecoration(border: InputBorder.none),
-                onSubmitted: (text) {},
-              ),
+                  textAlign: TextAlign.center,
+                  controller: TextEditingController(
+                      text: snap.data!['name'] ?? 'No Name'),
+                  style: Theme.of(context).textTheme.headline4,
+                  decoration: const InputDecoration(border: InputBorder.none),
+                  onSubmitted: (text) =>
+                      Provider.of<UserDao>(context, listen: false)
+                          .updateName(currentUserDao.userId()!, text)),
               const SizedBox(
                 height: 10,
               ),
