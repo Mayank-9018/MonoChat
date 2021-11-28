@@ -12,10 +12,10 @@ extension DateOnlyCompare on DateTime {
 class MessageWidget extends StatelessWidget {
   final String message;
   final DateTime date;
-  final String? email;
+  final String uid;
   final bool fromUser;
 
-  const MessageWidget(this.message, this.date, this.email,
+  const MessageWidget(this.message, this.date, this.uid,
       {Key? key, this.fromUser = false})
       : super(key: key);
 
@@ -64,7 +64,7 @@ class MessageWidget extends StatelessWidget {
                         : 'LLL d • h:mm a')
                     .format(date)
                     .toString() +
-                " • $email",
+                " • $uid",
             style: const TextStyle(color: Colors.grey, fontSize: 12),
           ),
         )

@@ -54,7 +54,8 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Hero(
-                  tag: currentUserDao.userId()!, child: UserImage(currentUserDao.photoUrl())),
+                  tag: currentUserDao.userId()!,
+                  child: UserImage(currentUserDao.photoUrl())),
             ),
           ),
         ],
@@ -99,7 +100,7 @@ class _ChatScreenState extends State<ChatScreen> {
       final message = Message(
           text: _messageController.text,
           date: DateTime.now(),
-          email: currentUserDao.email());
+          uid: currentUserDao.userId() as String);
       messageDao.saveMessage(message);
       _messageController.clear();
       scrollToBottom();
@@ -146,6 +147,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
     final message = Message.fromSnapshot(snapshot);
-    return MessageWidget(message.text, message.date, message.email);
+    return MessageWidget(message.text, message.date, message.uid);
   }
 }
