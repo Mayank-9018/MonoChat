@@ -1,27 +1,38 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:monochat/models/user_dao.dart';
+import 'package:provider/provider.dart';
 
 class UserImage extends StatelessWidget {
-  const UserImage(this.photoUrl, {Key? key, this.radius})
-      : hasPhoto = photoUrl != null && photoUrl != '',
-        super(key: key);
+  const UserImage(this.uid, {Key? key, this.radius}) : super(key: key);
   final double? radius;
-  final String? photoUrl;
-  final bool hasPhoto;
+  final String? uid;
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      radius: radius ?? 20,
-      backgroundColor: hasPhoto ? Colors.grey[300] : Colors.grey,
-      foregroundImage: hasPhoto ? CachedNetworkImageProvider(photoUrl!) : null,
-      child: hasPhoto
-          ? null
-          : Icon(
-              Icons.person,
-              size: radius != null ? 80.0 : 24.0,
-              color: Colors.black,
-            ),
-    );
+    return FutureBuilder<String?>(
+        initialData: null,
+        future: getPhotoUrl(context),
+        builder: (con, snapshot) {
+          return CircleAvatar(
+            radius: radius ?? 20,
+            backgroundColor: Colors.grey[200],
+            foregroundImage: snapshot.data != null
+                ? CachedNetworkImageProvider(snapshot.data!)
+                : null,
+            child: snapshot.data != null
+                ? null
+                : Icon(
+                    Icons.person,
+                    size: radius != null ? 80.0 : 24.0,
+                    color: Colors.black,
+                  ),
+          );
+        });
+  }
+
+  Future<String?> getPhotoUrl(BuildContext context) async {
+    var query = await Provider.of<UserDao>(context).getUserDate(uid as String);
+    return (query.docs.first.data() as Map<String, dynamic>)['photoUrl'];
   }
 }

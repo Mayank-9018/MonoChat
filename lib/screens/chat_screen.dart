@@ -55,7 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Hero(
                   tag: currentUserDao.userId()!,
-                  child: UserImage(currentUserDao.photoUrl())),
+                  child: UserImage(currentUserDao.userId())),
             ),
           ),
         ],
