@@ -23,7 +23,8 @@ class MessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future<Map<String, dynamic>> userDataFuture = getUserData(context);
+    Future<Map<String, dynamic>> userDataFuture =
+        Provider.of<UserDao>(context, listen: false).getUserDate(uid);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -95,11 +96,5 @@ class MessageWidget extends StatelessWidget {
                 }))
       ],
     );
-  }
-
-  Future<Map<String, dynamic>> getUserData(BuildContext context) async {
-    var query =
-        await Provider.of<UserDao>(context, listen: false).getUserDate(uid);
-    return query.docs.first.data() as Map<String, dynamic>;
   }
 }

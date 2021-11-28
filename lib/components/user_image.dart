@@ -32,7 +32,8 @@ class UserImage extends StatelessWidget {
   }
 
   Future<String?> getPhotoUrl(BuildContext context) async {
-    var query = await Provider.of<UserDao>(context).getUserDate(uid as String);
-    return (query.docs.first.data() as Map<String, dynamic>)['photoUrl'];
+    Map<String, dynamic> data =
+        await Provider.of<UserDao>(context, listen: false).getUserDate(uid!);
+    return data['photoUrl'];
   }
 }

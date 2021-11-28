@@ -3,8 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class UserDao {
   final CollectionReference collection =
       FirebaseFirestore.instance.collection('users');
-  Future<QuerySnapshot<Object?>> getUserDate(String uid) {
-    return collection.where('uid', isEqualTo: uid).limit(1).get();
+
+  Future<Map<String, dynamic>> getUserDate(String uid) async {
+    QuerySnapshot<Object?> query =
+        await collection.where('uid', isEqualTo: uid).limit(1).get();
+    return query.docs.first.data() as Map<String, dynamic>;
   }
 
   void addNewUser(String uid, String email, DateTime creationDate) {

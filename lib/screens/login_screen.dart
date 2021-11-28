@@ -131,7 +131,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void login() async {
     if (_formKey.currentState!.validate()) {
       try {
-        await currentUserDao.login(_emailController.text, _passwordController.text);
+        await currentUserDao.login(
+            _emailController.text, _passwordController.text);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (con) => const ChatScreen()));
       } catch (e) {
@@ -144,7 +145,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void signup() async {
     if (_formKey.currentState!.validate()) {
       try {
-        await currentUserDao.signup(_emailController.text, _passwordController.text);
+        await currentUserDao.signup(
+            _emailController.text, _passwordController.text);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (con) => const ChatScreen()));
       } catch (e) {
