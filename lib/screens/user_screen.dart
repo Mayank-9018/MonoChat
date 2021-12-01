@@ -5,6 +5,8 @@ import 'package:monochat/components/user_image.dart';
 import 'package:monochat/models/current_user_dao.dart';
 import 'package:monochat/models/user_dao.dart';
 import 'package:provider/provider.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:monochat/screens/image_crop_screen.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({Key? key}) : super(key: key);
@@ -50,9 +52,25 @@ class _UserScreenState extends State<UserScreen> {
               const SizedBox(
                 height: 40,
               ),
-              UserImage(
-                currentUserDao.userId()!,
-                radius: 100,
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (con) => SimpleDialog(
+                            children: [
+                              TextButton(
+                                  onPressed: selectImage,
+                                  child: const Text('Update profile picture')),
+                              TextButton(
+                                  onPressed: () {},
+                                  child: const Text('Remove profile picture'))
+                            ],
+                          ));
+                },
+                child: UserImage(
+                  currentUserDao.userId()!,
+                  radius: 100,
+                ),
               ),
               const SizedBox(
                 height: 15,
@@ -92,5 +110,16 @@ class _UserScreenState extends State<UserScreen> {
             ],
           ),
         ));
+  }
+
+  void selectImage() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+        dialogTitle: 'Pick Profile Picture',
+        type: FileType.image,
+        withData: true);
+    if (result != null) {
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (con) => ImageCropScreen(result.files.first.bytes!)));
+    }
   }
 }
