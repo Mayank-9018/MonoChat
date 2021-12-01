@@ -23,27 +23,36 @@ class ImageCropScreen extends StatelessWidget {
         onCropped: (data) {
           Stream<TaskSnapshot> taskStream =
               Provider.of<UserDao>(context, listen: false)
-                  .updateImage(uid, data);
+                  .updateImage(context, uid, data);
           showDialog(
+              barrierDismissible: false,
               context: context,
-              builder: (con) => SimpleDialog(
-                    children: [
-                      StreamBuilder<TaskSnapshot>(
-                          stream: taskStream,
-                          builder: (con, snap) {
-                            if (snap.hasData) {
-                              if (snap.data!.state != TaskState.success) {
+              builder: (con) => WillPopScope(
+                    onWillPop: () async => false,
+                    child: SimpleDialog(
+                      children: [
+                        StreamBuilder<TaskSnapshot>(
+                            stream: taskStream,
+                            builder: (con, snap) {
+                              if (snap.hasData) {
+                                if (snap.data!.state != TaskState.success) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                } else {
+                                  return Center(
+                                      child: Text(
+                                    'Upload Complete!',
+                                    style:
+                                        Theme.of(context).textTheme.headline6,
+                                  ));
+                                }
+                              } else {
                                 return const Center(
                                     child: CircularProgressIndicator());
-                              } else {
-                                return const Text('Upload Done!');
                               }
-                            } else {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
-                          })
-                    ],
+                            })
+                      ],
+                    ),
                   ));
         },
         aspectRatio: 1.0,

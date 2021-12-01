@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 
 class UserDao {
   final CollectionReference _collection =
@@ -19,11 +20,17 @@ class UserDao {
     _collection.doc(docId).update({'name': name});
   }
 
-  Stream<TaskSnapshot> updateImage(String uid, Uint8List imgData) {
+  Stream<TaskSnapshot> updateImage(
+      BuildContext context, String uid, Uint8List imgData) {
     UploadTask uploadTask =
         _storage.ref('user_images/$uid.jpeg').putData(imgData);
-    uploadTask.then((p0) =>
-        p0.ref.getDownloadURL().then((value) => _updatePhotoUrl(uid, value)));
+    uploadTask.then((p0) => p0.ref
+        .getDownloadURL()
+        .then((value) => _updatePhotoUrl(uid, value).then((value) {
+              for (var i = 0; i < 3; i++) {
+                Navigator.of(context).pop();
+              }
+            })));
     return uploadTask.snapshotEvents;
   }
 
