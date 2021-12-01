@@ -119,7 +119,7 @@ class _UserScreenState extends State<UserScreen> {
         withData: true);
     if (result != null) {
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (con) => ImageCropScreen(result.files.first.bytes!)));
+          builder: (con) => ImageCropScreen(currentUserDao.userId()!,result.files.first.bytes!)));
     }
   }
 }
