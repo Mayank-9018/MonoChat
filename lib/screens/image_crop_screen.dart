@@ -30,6 +30,7 @@ class ImageCropScreen extends StatelessWidget {
               builder: (con) => WillPopScope(
                     onWillPop: () async => false,
                     child: SimpleDialog(
+                      contentPadding: const EdgeInsets.all(15.0),
                       children: [
                         StreamBuilder<TaskSnapshot>(
                             stream: taskStream,
@@ -37,7 +38,7 @@ class ImageCropScreen extends StatelessWidget {
                               if (snap.hasData) {
                                 if (snap.data!.state != TaskState.success) {
                                   return const Center(
-                                      child: CircularProgressIndicator());
+                                      child: LinearProgressIndicator());
                                 } else {
                                   return Center(
                                       child: Text(
@@ -48,7 +49,7 @@ class ImageCropScreen extends StatelessWidget {
                                 }
                               } else {
                                 return const Center(
-                                    child: CircularProgressIndicator());
+                                    child: LinearProgressIndicator());
                               }
                             })
                       ],
