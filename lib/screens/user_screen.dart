@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:monochat/components/logout_dialog.dart';
@@ -5,8 +6,8 @@ import 'package:monochat/components/user_image.dart';
 import 'package:monochat/models/current_user_dao.dart';
 import 'package:monochat/models/user_dao.dart';
 import 'package:provider/provider.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:monochat/screens/image_crop_screen.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({Key? key}) : super(key: key);
@@ -113,13 +114,13 @@ class _UserScreenState extends State<UserScreen> {
   }
 
   void selectImage() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-        dialogTitle: 'Pick Profile Picture',
-        type: FileType.image,
-        withData: true);
-    if (result != null) {
+    XFile? file = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, maxHeight: 500, maxWidth: 500);
+    if (file != null) {
+      Uint8List imageData = await file.readAsBytes();
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (con) => ImageCropScreen(currentUserDao.userId()!,result.files.first.bytes!)));
+          builder: (con) =>
+              ImageCropScreen(currentUserDao.userId()!, imageData)));
     }
   }
 }
