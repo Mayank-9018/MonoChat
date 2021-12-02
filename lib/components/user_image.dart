@@ -17,16 +17,17 @@ class UserImage extends StatelessWidget {
           return CircleAvatar(
             radius: radius ?? 20,
             backgroundColor: Colors.grey[200],
-            foregroundImage: snapshot.data != null
-                ? CachedNetworkImageProvider(snapshot.data!)
-                : null,
-            child: snapshot.data != null
-                ? null
-                : Icon(
-                    Icons.person,
-                    size: radius != null ? 80.0 : 24.0,
-                    color: Colors.black,
-                  ),
+            child: ClipOval(
+              child: (snapshot.hasData && snapshot.data != null)
+                  ? CachedNetworkImage(
+                      imageUrl: snapshot.data!,
+                    )
+                  : Icon(
+                      Icons.person,
+                      size: radius != null ? 80.0 : 24.0,
+                      color: Colors.black,
+                    ),
+            ),
           );
         });
   }
