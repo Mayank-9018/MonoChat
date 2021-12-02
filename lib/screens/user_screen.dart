@@ -63,7 +63,7 @@ class _UserScreenState extends State<UserScreen> {
                                   onPressed: selectImage,
                                   child: const Text('Update profile picture')),
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: removeImage,
                                   child: const Text('Remove profile picture'))
                             ],
                           ));
@@ -122,5 +122,11 @@ class _UserScreenState extends State<UserScreen> {
           builder: (con) =>
               ImageCropScreen(currentUserDao.userId()!, imageData)));
     }
+  }
+
+  void removeImage() {
+    Provider.of<UserDao>(context, listen: false)
+        .updateImage(context, currentUserDao.userId()!, null);
+    Navigator.of(context).pop();
   }
 }

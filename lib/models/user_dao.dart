@@ -20,8 +20,12 @@ class UserDao {
     _collection.doc(docId).update({'name': name});
   }
 
-  Stream<TaskSnapshot> updateImage(
-      BuildContext context, String uid, Uint8List imgData) {
+  Stream<TaskSnapshot>? updateImage(
+      BuildContext context, String uid, Uint8List? imgData) {
+    if (imgData == null) {
+      _updatePhotoUrl(uid, null);
+      return null;
+    }
     UploadTask uploadTask =
         _storage.ref('user_images/$uid.jpeg').putData(imgData);
     uploadTask.then((p0) => p0.ref
@@ -34,7 +38,7 @@ class UserDao {
     return uploadTask.snapshotEvents;
   }
 
-  Future<void> _updatePhotoUrl(String uid, String photoUrl) async {
+  Future<void> _updatePhotoUrl(String uid, String? photoUrl) async {
     var query = await _collection.where('uid', isEqualTo: uid).get();
     String docId = query.docs.first.id;
     _collection.doc(docId).update({'photoUrl': photoUrl});

@@ -23,7 +23,7 @@ class ImageCropScreen extends StatelessWidget {
         onCropped: (data) {
           Stream<TaskSnapshot> taskStream =
               Provider.of<UserDao>(context, listen: false)
-                  .updateImage(context, uid, data);
+                  .updateImage(context, uid, data)!;
           showDialog(
               barrierDismissible: false,
               context: context,
