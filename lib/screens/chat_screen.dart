@@ -1,13 +1,17 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:monochat/components/user_image.dart';
 import 'package:monochat/models/message.dart';
 import 'package:monochat/models/message_dao.dart';
 import 'package:monochat/models/current_user_dao.dart';
+import 'package:monochat/screens/changelog_screen.dart';
 import 'package:monochat/screens/user_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:monochat/components/message_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({Key? key}) : super(key: key);
@@ -27,6 +31,7 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
     currentUserDao = Provider.of<CurrentUserDao>(context, listen: false);
     messageDao = Provider.of<MessageDao>(context, listen: false);
+    checkChangelog();
   }
 
   @override
@@ -146,5 +151,16 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget _buildListItem(BuildContext context, DocumentSnapshot snapshot) {
     final message = Message.fromSnapshot(snapshot);
     return MessageWidget(message.text, message.date, message.uid);
+  }
+
+  void checkChangelog() async {
+    String version = jsonDecode(
+        await rootBundle.loadString('assets/changelog.json'))['version'];
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    if (sharedPreferences.getBool('change_$version') == null ||
+        sharedPreferences.getBool('change_$version') == false) {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (con) => const ChangelogScreen()));
+    }
   }
 }

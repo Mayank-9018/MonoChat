@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 //TODO: Define text theme
 ThemeData lightTheme = ThemeData(
+  elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+          overlayColor: MaterialStateProperty.all(Colors.grey.shade900),
+          backgroundColor: MaterialStateProperty.all(Colors.black))),
   textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(Colors.grey.shade100),

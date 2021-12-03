@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 ThemeData darkTheme = ThemeData.dark().copyWith(
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+            overlayColor: MaterialStateProperty.all(Colors.grey[800]),
+            backgroundColor: MaterialStateProperty.all(Colors.grey[900]))),
     dialogTheme: const DialogTheme(
         backgroundColor: Colors.black,
         elevation: 24.0,

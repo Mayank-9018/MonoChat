@@ -1,0 +1,16 @@
+{
+    "version": "1.0.3",
+    "changes": [
+        {
+            "title": "Username renaming",
+            "body": "Username can now be changed in the User details page."
+        },
+        {
+            "title": "Profile Picture update",
+            "body": "Users can now update or remove their profile pictures."
+        },
+        {
+            "title": "Bug fixes and performance improvements"
+        }
+    ]
+}
