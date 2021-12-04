@@ -1,9 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ind.mayank.monochat">
    <application
-        android:label="monochat"
-        android:icon="@mipmap/ic_launcher">
+       android:allowBackup="true"
+       android:fullBackupOnly="true"
+        android:label="MonoChat"
+        android:icon="@mipmap/mono_logo">
         <activity
+            android:exported="true"
             android:name=".MainActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
