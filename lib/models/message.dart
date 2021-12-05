@@ -11,7 +11,9 @@ class Message {
 
   factory Message.fromJson(Map<dynamic, dynamic> json) => Message(
       text: json['text'] as String,
-      date: json['timeStamp'].toDate(),
+      date: json['timeStamp'] == null
+          ? DateTime.now()
+          : json['timeStamp'].toDate(),
       uid: json['uid'] as String);
 
   Map<String, dynamic> toJson() => <String, dynamic>{
