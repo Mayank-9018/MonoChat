@@ -11,7 +11,6 @@ import 'themes/themes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // TODO: Check if using await is right here or not
   runApp(const App());
 }
 
