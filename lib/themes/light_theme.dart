@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 //TODO: Define text theme
 ThemeData lightTheme = ThemeData(
+  progressIndicatorTheme: ProgressIndicatorThemeData(
+      color: Colors.black,
+      circularTrackColor: Colors.grey[200],
+      linearTrackColor: Colors.grey[200]),
   elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
           overlayColor: MaterialStateProperty.all(Colors.grey.shade900),

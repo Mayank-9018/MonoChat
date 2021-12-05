@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 ThemeData darkTheme = ThemeData.dark().copyWith(
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: Colors.white,
+        circularTrackColor: Colors.grey[900],
+        linearTrackColor: Colors.grey[900]),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
             overlayColor: MaterialStateProperty.all(Colors.grey[800]),
