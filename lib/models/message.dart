@@ -1,11 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Message {
-  //TODO: Replace date by timestamp
   final String text;
   final DateTime date;
   final String uid;
-  final FieldValue timeStamp = FieldValue.serverTimestamp();
 
   DocumentReference? reference;
 
@@ -13,12 +11,11 @@ class Message {
 
   factory Message.fromJson(Map<dynamic, dynamic> json) => Message(
       text: json['text'] as String,
-      date: DateTime.parse(json['date'] as String),
+      date: json['timeStamp'].toDate(),
       uid: json['uid'] as String);
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'timeStamp': timeStamp,
-        'date': date.toString(),
+        'timeStamp': FieldValue.serverTimestamp(),
         'text': text,
         'uid': uid
       };
