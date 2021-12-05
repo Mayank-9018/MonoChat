@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:monochat/models/current_user_dao.dart';
 import 'package:monochat/screens/chat_screen.dart';
+import 'package:monochat/screens/email_verify_screen.dart';
 import 'package:provider/provider.dart';
 
-//TODO: Email verification
-
+//TODO: Passoword reset
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -133,8 +133,15 @@ class _LoginScreenState extends State<LoginScreen> {
       try {
         await currentUserDao.login(
             _emailController.text, _passwordController.text);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (con) => const ChatScreen()));
+        if (Provider.of<CurrentUserDao>(context, listen: false).isVerified()) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (con) => const ChatScreen()));
+        } else {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (con) => const EmailVerificationScreen()));
+        }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             behavior: SnackBarBehavior.floating, content: Text(e.toString())));
@@ -147,8 +154,15 @@ class _LoginScreenState extends State<LoginScreen> {
       try {
         await currentUserDao.signup(
             _emailController.text, _passwordController.text);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (con) => const ChatScreen()));
+        if (Provider.of<CurrentUserDao>(context, listen: false).isVerified()) {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (con) => const ChatScreen()));
+        } else {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (con) => const EmailVerificationScreen()));
+        }
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             behavior: SnackBarBehavior.floating, content: Text(e.toString())));

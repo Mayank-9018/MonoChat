@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 import 'package:monochat/screens/image_crop_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
+//TODO: Email change
+
 class UserScreen extends StatefulWidget {
   const UserScreen({Key? key}) : super(key: key);
 

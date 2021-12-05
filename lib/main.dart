@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:monochat/models/user_dao.dart';
+import 'package:monochat/screens/email_verify_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:monochat/models/current_user_dao.dart';
@@ -38,9 +39,12 @@ class App extends StatelessWidget {
         return MaterialApp(
           theme: lightTheme,
           darkTheme: darkTheme,
+          themeMode: ThemeMode.dark,
           title: 'MonoChat',
           home: Provider.of<CurrentUserDao>(context, listen: false).isLoggedIn()
-              ? const ChatScreen()
+              ? Provider.of<CurrentUserDao>(context, listen: false).isVerified()
+                  ? const ChatScreen()
+                  : const EmailVerificationScreen()
               : const LoginScreen(),
         );
       },

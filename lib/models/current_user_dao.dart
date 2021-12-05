@@ -18,6 +18,31 @@ class CurrentUserDao {
     return auth.currentUser?.uid;
   }
 
+  String? email() {
+    return auth.currentUser!.email;
+  }
+
+  bool isVerified() {
+    return auth.currentUser!.emailVerified;
+  }
+
+  void verifyEmail() {
+    auth.currentUser?.sendEmailVerification();
+  }
+
+  Stream<bool> checkVerificationStream() async* {
+    while (true) {
+      auth.currentUser!.reload();
+      if (isVerified()) {
+        yield true;
+        break;
+      } else {
+        yield false;
+      }
+      await Future.delayed(const Duration(seconds: 5));
+    }
+  }
+
   Future<bool> signup(String email, String password) async {
     try {
       await auth.createUserWithEmailAndPassword(
@@ -28,6 +53,7 @@ class CurrentUserDao {
           auth.currentUser!.uid,
           email,
           auth.currentUser!.metadata.creationTime as DateTime);
+      verifyEmail();
       return true;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
