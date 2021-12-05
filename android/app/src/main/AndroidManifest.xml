@@ -1,8 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ind.mayank.monochat">
-   <application
-       android:allowBackup="true"
-       android:fullBackupOnly="true"
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
+        android:allowBackup="true"
+        android:fullBackupOnly="true"
         android:label="MonoChat"
         android:icon="@mipmap/mono_logo">
         <activity
