@@ -39,7 +39,6 @@ class App extends StatelessWidget {
         return MaterialApp(
           theme: lightTheme,
           darkTheme: darkTheme,
-          themeMode: ThemeMode.dark,
           title: 'MonoChat',
           home: Provider.of<CurrentUserDao>(context, listen: false).isLoggedIn()
               ? Provider.of<CurrentUserDao>(context, listen: false).isVerified()
