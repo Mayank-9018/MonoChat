@@ -1,16 +1,22 @@
 {
-    "version": "1.0.3",
+    "version": "1.1.0",
     "changes": [
         {
-            "title": "Username renaming",
-            "body": "Username can now be changed in the User details page."
+            "title": "✨ New App logo and Splash Screen ✨"
         },
         {
-            "title": "Profile Picture update",
-            "body": "Users can now update or remove their profile pictures."
+            "title": "Email verification 📧",
+            "body": "Email verification is necessary for all users."
         },
         {
-            "title": "Bug fixes and performance improvements"
+            "title": "Fixed time differences between timezones ⌚"
+        },
+        {
+            "title": "Improved theming 🌈",
+            "body": "Uniform theming for progress indicators."
+        },
+        {
+            "title": "🐛 Bug fixes and performance improvements 🚀"
         }
     ]
 }
