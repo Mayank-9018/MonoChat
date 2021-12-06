@@ -4,7 +4,6 @@ import 'package:monochat/screens/chat_screen.dart';
 import 'package:monochat/screens/email_verify_screen.dart';
 import 'package:provider/provider.dart';
 
-//TODO: Passoword reset
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -85,33 +84,45 @@ class _LoginScreenState extends State<LoginScreen> {
           const SizedBox(
             height: 10,
           ),
-          TextFormField(
-              controller: _passwordController,
-              autofocus: false,
-              autocorrect: false,
-              obscureText: true,
-              keyboardType: TextInputType.visiblePassword,
-              textCapitalization: TextCapitalization.none,
-              decoration: InputDecoration(
-                  labelStyle: Theme.of(context).textTheme.bodyText1,
-                  labelText: 'Password',
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                          color:
-                              Theme.of(context).brightness == Brightness.light
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextFormField(
+                  controller: _passwordController,
+                  autofocus: false,
+                  autocorrect: false,
+                  obscureText: true,
+                  keyboardType: TextInputType.visiblePassword,
+                  textCapitalization: TextCapitalization.none,
+                  decoration: InputDecoration(
+                      labelStyle: Theme.of(context).textTheme.bodyText1,
+                      labelText: 'Password',
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Theme.of(context).brightness ==
+                                      Brightness.light
                                   ? Colors.black
                                   : Colors.white,
-                          width: 1.5))),
-              validator: (text) {
-                if (text == null ||
-                    text.trim() == '' ||
-                    text.trim().length < 8) {
-                  return 'Invalid password!';
-                } else {
-                  return null;
-                }
-              },
-              onEditingComplete: login),
+                              width: 1.5))),
+                  validator: (text) {
+                    if (text == null ||
+                        text.trim() == '' ||
+                        text.trim().length < 8) {
+                      return 'Invalid password!';
+                    } else {
+                      return null;
+                    }
+                  },
+                  onEditingComplete: login),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'Forgot password',
+                  style: TextStyle(fontSize: 12),
+                ),
+              )
+            ],
+          ),
           const SizedBox(
             height: 10,
           ),
