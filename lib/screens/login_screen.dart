@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:monochat/models/current_user_dao.dart';
 import 'package:monochat/screens/chat_screen.dart';
 import 'package:monochat/screens/email_verify_screen.dart';
+import 'package:monochat/screens/password_reset_screen.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -115,7 +116,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   onEditingComplete: login),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (con) => PasswordResetScreen()));
+                },
                 child: const Text(
                   'Forgot password',
                   style: TextStyle(fontSize: 12),
