@@ -30,6 +30,19 @@ class CurrentUserDao {
     auth.currentUser?.sendEmailVerification();
   }
 
+  Future<bool> sendPasswordReset(String email) async {
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+      return true;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        throw UserNotFound();
+      } else {
+        throw Exception(e.message);
+      }
+    }
+  }
+
   Stream<bool> checkVerificationStream() async* {
     while (true) {
       auth.currentUser!.reload();
