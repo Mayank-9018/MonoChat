@@ -1,22 +1,9 @@
 {
-    "version": "1.1.0",
+    "version": "1.2.0",
     "changes": [
         {
-            "title": "✨ New App logo and Splash Screen ✨"
-        },
-        {
-            "title": "Email verification 📧",
-            "body": "Email verification is necessary for all users."
-        },
-        {
-            "title": "Fixed time differences between timezones ⌚"
-        },
-        {
-            "title": "Improved theming 🌈",
-            "body": "Uniform theming for progress indicators."
-        },
-        {
-            "title": "🐛 Bug fixes and performance improvements 🚀"
+            "title": "🔑 Password reset now available.",
+            "body": "Users can now reset their password from the login screen."
         }
     ]
 }
