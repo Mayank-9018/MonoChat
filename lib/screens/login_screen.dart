@@ -137,7 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: const Text('Login'),
           ),
           TextButton(
-            onPressed: signup,
+            onPressed: () => login(signUp: true),
             child: const Text('Create new account'),
           ),
         ],
@@ -145,42 +145,42 @@ class _LoginScreenState extends State<LoginScreen> {
     ));
   }
 
-  void login() async {
+  void login({bool signUp = false}) async {
     if (_formKey.currentState!.validate()) {
+      showDialog(
+        context: context,
+        builder: (context) => Center(
+          child: Container(
+            padding: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+                color: Theme.of(context).cardColor.withOpacity(0.7),
+                borderRadius: BorderRadius.circular(10.0)),
+            child: const CircularProgressIndicator(),
+          ),
+        ),
+      );
       try {
-        await currentUserDao.login(
-            _emailController.text, _passwordController.text);
-        if (Provider.of<CurrentUserDao>(context, listen: false).isVerified()) {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (con) => const ChatScreen()));
+        if (signUp) {
+          await currentUserDao.signup(
+              _emailController.text, _passwordController.text);
         } else {
-          Navigator.pushReplacement(
+          await currentUserDao.login(
+              _emailController.text, _passwordController.text);
+        }
+        if (Provider.of<CurrentUserDao>(context, listen: false).isVerified()) {
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (con) => const ChatScreen()),
+              (route) => false);
+        } else {
+          Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(
-                  builder: (con) => const EmailVerificationScreen()));
+                  builder: (con) => const EmailVerificationScreen()),
+              (route) => false);
         }
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            behavior: SnackBarBehavior.floating, content: Text(e.toString())));
-      }
-    }
-  }
-
-  void signup() async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        await currentUserDao.signup(
-            _emailController.text, _passwordController.text);
-        if (Provider.of<CurrentUserDao>(context, listen: false).isVerified()) {
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (con) => const ChatScreen()));
-        } else {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (con) => const EmailVerificationScreen()));
-        }
-      } catch (e) {
+        Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             behavior: SnackBarBehavior.floating, content: Text(e.toString())));
       }
