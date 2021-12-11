@@ -45,6 +45,10 @@ class CurrentUserDao {
 
   Stream<bool> checkVerificationStream() async* {
     while (true) {
+      if (auth.currentUser == null) {
+        yield false;
+        break;
+      }
       auth.currentUser!.reload();
       if (isVerified()) {
         yield true;

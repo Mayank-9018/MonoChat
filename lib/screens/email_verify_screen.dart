@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:monochat/models/current_user_dao.dart';
 import 'package:monochat/screens/chat_screen.dart';
+import 'package:monochat/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 
 class EmailVerificationScreen extends StatelessWidget {
@@ -13,6 +14,18 @@ class EmailVerificationScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Email verification'),
         centerTitle: true,
+        actions: [
+          TextButton(
+              onPressed: () {
+                currentUserDao.logout();
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ));
+              },
+              child: const Text('Logout'))
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 50),
