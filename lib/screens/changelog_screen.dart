@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,7 +43,7 @@ class ChangelogScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline5,
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 20,
                       ),
                       Expanded(
                           child: ListView.builder(
