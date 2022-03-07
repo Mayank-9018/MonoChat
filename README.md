@@ -1,6 +1,10 @@
 # MonoChat
 A Chat app made with Flutter 💙 and Firebase 💛.
 
+
+[![download-btn](https://img.shields.io/badge/Download-APK-brightgreen?style=for-the-badge&logo=android)](https://github.com/Mayank-9018/MonoChat/releases/latest)
+
+
 ### Screenshots:
 #### Login:
 ![login](https://user-images.githubusercontent.com/77046231/144737446-42c2685e-b80b-42a1-b40a-36c54663d50d.png)
